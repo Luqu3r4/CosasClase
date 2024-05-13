@@ -17,18 +17,18 @@ public class Ticket {
 		turno++;
 	}
 	
-	public int tirarTicket() {
-		int numeroTicket;
+	public String tirarTicket() {
+		String valorTicket;
 		if(numero == 99) {
 			numero = 0;
 			int valorAscii = letra.charAt(0);
 			valorAscii++;
-			letra = valorAscii.;
+			letra = String.valueOf((char) valorAscii);
+		}else {
+			numero++;			
 		}
-		numeroTicket = numero;
-		numero++;
-		
-		return numeroTicket;
+		valorTicket = String.format("Letra: %s\nNumero: %s", letra, numero);
+		return valorTicket;
 	}
 	
 	public int getTurno() {
@@ -37,6 +37,7 @@ public class Ticket {
 	
 	public void restablecer() {
 		numero = 0;
+		letra = "A";
 		turno = 0;
 	}
 }
