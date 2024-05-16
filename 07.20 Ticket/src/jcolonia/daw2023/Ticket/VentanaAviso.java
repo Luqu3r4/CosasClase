@@ -1,68 +1,73 @@
 package jcolonia.daw2023.Ticket;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.BorderLayout;
 import javax.swing.JTextArea;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class VentanaAviso extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JPanel jpanelExterior;
-	private JTextArea jtextAviso;
+	private JPanel jpanelPrincipal;
+	private JPanel jpanelBotones;
+	private JTextArea jtexto;
 	private String aviso;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VentanaAviso frame = new VentanaAviso(aviso);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private JButton jbotonAceptar;
 
 	/**
 	 * Create the frame.
 	 */
 	public VentanaAviso(String aviso) {
-		initialize();
 		this.aviso = aviso;
-	}
-	private void initialize() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
-		
-				setContentPane(contentPane);
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
-		contentPane.add(getJpanelExterior(), BorderLayout.CENTER);
+		contentPane.add(getJpanelPrincipal());
+		contentPane.add(getJpanelBotones(), BorderLayout.SOUTH);
 	}
 
-	private JPanel getJpanelExterior() {
-		if (jpanelExterior == null) {
-			jpanelExterior = new JPanel();
-			jpanelExterior.setBorder(new EmptyBorder(10, 10, 10, 10));
-			jpanelExterior.setLayout(new BorderLayout(0, 0));
-			jpanelExterior.add(getJtextAviso(), BorderLayout.CENTER);
+	private JPanel getJpanelPrincipal() {
+		if (jpanelPrincipal == null) {
+			jpanelPrincipal = new JPanel();
+			jpanelPrincipal.setLayout(new BorderLayout(0, 0));
+			jpanelPrincipal.add(getJtexto(), BorderLayout.CENTER);
 		}
-		return jpanelExterior;
+		return jpanelPrincipal;
 	}
-	private JTextArea getJtextAviso() {
-		if (jtextAviso == null) {
-			jtextAviso = new JTextArea(aviso);
+	private JPanel getJpanelBotones() {
+		if (jpanelBotones == null) {
+			jpanelBotones = new JPanel();
+			jpanelBotones.setBorder(new EmptyBorder(10, 10, 10, 10));
+			jpanelBotones.setLayout(new BorderLayout(0, 0));
+			jpanelBotones.add(getJbotonAceptar(), BorderLayout.CENTER);
 		}
-		return jtextAviso;
+		return jpanelBotones;
+	}
+	private JTextArea getJtexto() {
+		if (jtexto == null) {
+			jtexto = new JTextArea(aviso);
+			jtexto.setEditable(false);
+		}
+		return jtexto;
+	}
+	private JButton getJbotonAceptar() {
+		if (jbotonAceptar == null) {
+			jbotonAceptar = new JButton("ACEPTAR");
+			jbotonAceptar.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					dispose();
+				}
+			});
+		}
+		return jbotonAceptar;
 	}
 }
