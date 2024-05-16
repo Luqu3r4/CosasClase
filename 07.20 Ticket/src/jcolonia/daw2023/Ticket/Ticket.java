@@ -43,7 +43,7 @@ public class Ticket {
 	
 	public String getTurno() {
 		String turno;
-		turno = String.format("Letra: %s\nNumero: %s", numeroTurno, letraTurno);
+		turno = String.format("Numero: %s\nLetra: %s", numeroTurno, letraTurno);
 		return turno;
 	}
 	

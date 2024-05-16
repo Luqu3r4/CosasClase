@@ -88,9 +88,15 @@ public class VentanaTicket extends JFrame {
 					try {
 						ticket.avanzarTurno();
 					} catch (TicketException e1) {
-						// TODO Bloque catch generado automáticamente
-						e1.printStackTrace();
+						System.err.printf("No queda gente en la cola");
+						try {
+							VentanaAviso frame = new VentanaAviso("No queda gente en la cola");
+							frame.setVisible(true);
+						} catch (Exception ex) {
+							ex.printStackTrace();
+						}
 					}
+					jtexto.setText(ticket.getTurno());
 				}
 			});
 		}
@@ -102,6 +108,7 @@ public class VentanaTicket extends JFrame {
 			jbotonRestablecer.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					ticket.restablecer();
+					jtexto.setText(ticket.getTurno());
 				}
 			});
 		}
