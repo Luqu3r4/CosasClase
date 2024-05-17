@@ -1,6 +1,6 @@
-package jcolonia.daw2023.Ticket;
+package jcolonia.daw2023.TicketAvanzado;
 
-public class Ticket {
+public class TicketAvanzado {
 	private String titulo;
 	private int numeroTurno;
 	private char letraTurno;
@@ -8,7 +8,7 @@ public class Ticket {
 	private char letraTicket;
 	private int turno;
 	
-	public Ticket(String titulo) {
+	public TicketAvanzado(String titulo) {
 		this.titulo = titulo;
 		numeroTurno = 0;
 		letraTurno = 'A';
@@ -16,7 +16,7 @@ public class Ticket {
 		letraTicket = 'A';
 	}
 	
-	public void avanzarTurno() throws TicketException {
+	public void avanzarTurno() throws TicketAvanzadoException {
 		if(comprobarDiferencia()) {
 			if(numeroTurno == 99) {
 				numeroTurno = 0;
@@ -25,7 +25,7 @@ public class Ticket {
 				numeroTurno++;			
 			}
 		} else {
-			throw new TicketException("NO HAY MAS GENTE EN LA COLA");
+			throw new TicketAvanzadoException("NO HAY MAS GENTE EN LA COLA");
 		}
 	}			
 	
@@ -70,4 +70,5 @@ public class Ticket {
 		
 		return aceptado;
 	}
+
 }

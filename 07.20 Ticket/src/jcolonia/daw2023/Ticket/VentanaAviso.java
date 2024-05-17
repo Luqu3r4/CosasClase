@@ -8,6 +8,7 @@ import javax.swing.JTextArea;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Font;
 
 public class VentanaAviso extends JFrame {
 
@@ -18,12 +19,32 @@ public class VentanaAviso extends JFrame {
 	private JTextArea jtexto;
 	private String aviso;
 	private JButton jbotonAceptar;
+	private int tamañoFuente;
 
 	/**
 	 * Create the frame.
 	 */
 	public VentanaAviso(String aviso) {
 		this.aviso = aviso;
+		tamañoFuente = 18;
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 300);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		setContentPane(contentPane);
+		contentPane.setLayout(new BorderLayout(0, 0));
+		contentPane.add(getJpanelPrincipal());
+		contentPane.add(getJpanelBotones(), BorderLayout.SOUTH);
+	}
+	/**
+	 * @param aviso texto con el que saldra el aviso
+	 * @param tamañoFuente tamaño del texto del aviso
+	 * @wbp.parser.constructor
+	 */
+	public VentanaAviso(String aviso, int tamañoFuente) {
+		this.aviso = aviso;
+		this.tamañoFuente = tamañoFuente;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -39,7 +60,7 @@ public class VentanaAviso extends JFrame {
 		if (jpanelPrincipal == null) {
 			jpanelPrincipal = new JPanel();
 			jpanelPrincipal.setLayout(new BorderLayout(0, 0));
-			jpanelPrincipal.add(getJtexto(), BorderLayout.CENTER);
+			jpanelPrincipal.add(getJtexto(tamañoFuente), BorderLayout.CENTER);
 		}
 		return jpanelPrincipal;
 	}
@@ -52,9 +73,10 @@ public class VentanaAviso extends JFrame {
 		}
 		return jpanelBotones;
 	}
-	private JTextArea getJtexto() {
+	private JTextArea getJtexto(int tamañoFuente) {
 		if (jtexto == null) {
 			jtexto = new JTextArea(aviso);
+			jtexto.setFont(new Font("Monospaced", Font.PLAIN, tamañoFuente));
 			jtexto.setEditable(false);
 		}
 		return jtexto;

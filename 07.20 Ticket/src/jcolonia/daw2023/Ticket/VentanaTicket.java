@@ -12,6 +12,14 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Font;
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.border.TitledBorder;
+import javax.swing.border.EtchedBorder;
+import java.awt.Color;
 
 public class VentanaTicket extends JFrame {
 
@@ -26,6 +34,11 @@ public class VentanaTicket extends JFrame {
 	private JButton jbotonTicket;
 	private JTextArea jtexto;
 	private Ticket ticket;
+	private JPanel jpanelMenu;
+	private JMenuBar menuBar;
+	private JMenu jmenuOpciones;
+	private JMenuItem jitemBienvenida;
+	private JMenuItem jitemAcercaDe;
 
 	/**
 	 * Launch the application.
@@ -58,12 +71,14 @@ public class VentanaTicket extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 		contentPane.add(getJpanelExterior());
+		contentPane.add(getJpanelMenu_1(), BorderLayout.NORTH);
 	}
 
 	private JPanel getJpanelExterior() {
 		if (jpanelExterior == null) {
 			jpanelExterior = new JPanel();
-			jpanelExterior.setBorder(new EmptyBorder(10, 10, 10, 10));
+			jpanelExterior.setToolTipText("");
+			jpanelExterior.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), ticket.getTitulo(), TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 			jpanelExterior.setLayout(new BorderLayout(0, 0));
 			jpanelExterior.add(getJpanelBotones(), BorderLayout.SOUTH);
 			jpanelExterior.add(getJpanelPrincipal(), BorderLayout.CENTER);
@@ -88,13 +103,10 @@ public class VentanaTicket extends JFrame {
 					try {
 						ticket.avanzarTurno();
 					} catch (TicketException e1) {
-						System.err.printf("No queda gente en la cola");
-						try {
-							VentanaAviso frame = new VentanaAviso("No queda gente en la cola");
-							frame.setVisible(true);
-						} catch (Exception ex) {
-							ex.printStackTrace();
-						}
+						String texto = """
+								No queda gente en la cola
+								""";
+						JOptionPane.showMessageDialog(getVentana(), texto);
 					}
 					jtexto.setText(ticket.getTurno());
 				}
@@ -137,7 +149,7 @@ public class VentanaTicket extends JFrame {
 			jbotonTicket.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					try {
-						VentanaAviso frame = new VentanaAviso(ticket.cogerTicket());
+						VentanaAviso frame = new VentanaAviso(ticket.cogerTicket(),32);
 						frame.setVisible(true);
 					} catch (Exception ex) {
 						ex.printStackTrace();
@@ -150,7 +162,64 @@ public class VentanaTicket extends JFrame {
 	private JTextArea getJtexto() {
 		if (jtexto == null) {
 			jtexto = new JTextArea(ticket.getTurno());
+			jtexto.setFont(new Font("Monospaced", Font.PLAIN, 32));
 		}
 		return jtexto;
+	}
+	private JPanel getJpanelMenu_1() {
+		if (jpanelMenu == null) {
+			jpanelMenu = new JPanel();
+			jpanelMenu.setLayout(new BorderLayout(0, 0));
+			jpanelMenu.add(getMenuBar_2(), BorderLayout.NORTH);
+		}
+		return jpanelMenu;
+	}
+	private JMenuBar getMenuBar_2() {
+		if (menuBar == null) {
+			menuBar = new JMenuBar();
+			menuBar.add(getJmenuOpciones());
+		}
+		return menuBar;
+	}
+	private JMenu getJmenuOpciones() {
+		if (jmenuOpciones == null) {
+			jmenuOpciones = new JMenu("OPCIONES");
+			jmenuOpciones.add(getJitemBienvenida());
+			jmenuOpciones.add(getJitemAcercaDe());
+		}
+		return jmenuOpciones;
+	}
+	private JMenuItem getJitemBienvenida() {
+		if (jitemBienvenida == null) {
+			jitemBienvenida = new JMenuItem("Bienvenida");
+			jitemBienvenida.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					String texto = """
+							Este programa permite ver cual es tu ticket 
+							          y en que turno va la fila.
+							""";
+					JOptionPane.showMessageDialog(getVentana(), texto);
+				}
+			});
+		}
+		return jitemBienvenida;
+	}
+	private JMenuItem getJitemAcercaDe() {
+		if (jitemAcercaDe == null) {
+			jitemAcercaDe = new JMenuItem("AcercaDe");
+			jitemAcercaDe.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					String texto = """
+							Autor: Rubén Lacalle
+							Versión: 1.0
+							""";
+					JOptionPane.showMessageDialog(getVentana(), texto);
+				}
+			});
+		}
+		return jitemAcercaDe;
+	}
+	private JFrame getVentana() {
+		return this;
 	}
 }
